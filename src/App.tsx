@@ -43,7 +43,7 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div>
       <UsersContext.Provider value={{
         profiles: registeredUsers,
         setProfiles: p => setRegisteredUser(
@@ -69,7 +69,7 @@ function App() {
           </TasksContext.Provider>
         </TeamsContext.Provider>
       </UsersContext.Provider>
-    </>
+    </div>
   )
 }
 
