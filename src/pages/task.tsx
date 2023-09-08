@@ -6,7 +6,7 @@ export const TaskCreate: React.FC = () => {
     const teams = useContext(TeamsContext)
 
     const onCreateTaskFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-        throw new Error('Function not implemented.')
+        e.preventDefault()
     }
 
     return (
@@ -40,7 +40,7 @@ export const TaskCreate: React.FC = () => {
                     <select name="team" id="team" required className='bg-white drop-shadow border rounded w-5/6 p-2 focus:outline-none focus:border-0 focus:border-b-2 focus:border-blue-500'>
                         {
                             teams?.teams
-                                .filter((team, idx) => team.members.includes(currentProfile!.profile!.username))
+                                .filter((team) => team.members.includes(currentProfile!.profile!.username))
                                 .map((team, idx) => <option key={idx} value={team.id}>{team.title}</option>)
                         }
                     </select>

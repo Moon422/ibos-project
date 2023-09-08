@@ -1,4 +1,4 @@
-import React, { Children, ReactElement, useContext, useState } from 'react'
+import React, { ReactElement, useContext, useState } from 'react'
 
 import ibosLogo from '../assets/images/ibos-logo-210.webp'
 import mugshot from '../assets/images/mugshot.png'
@@ -16,7 +16,7 @@ export const Dashboard: React.FC<{ children: ReactElement }> = ({ children }) =>
                     <img src={ibosLogo} alt="IBos Logo" className='h-full' />
                 </div>
                 {
-                    currentProfileContext?.profile ? <button onClick={e => setShowDropdown((v) => !v)} className={`h-12 items-center flex gap-2 py-2 px-4 rounded shadow ${showDropdown ? 'bg-blue-100 shadow-black' : 'bg-orange-300'} relative hover:shadow-black hover:bg-blue-100 hover:text-black active:shadow-none active:text-white active:bg-gray-500`}>
+                    currentProfileContext?.profile ? <button onClick={() => setShowDropdown((v) => !v)} className={`h-12 items-center flex gap-2 py-2 px-4 rounded shadow ${showDropdown ? 'bg-blue-100 shadow-black' : 'bg-orange-300'} relative hover:shadow-black hover:bg-blue-100 hover:text-black active:shadow-none active:text-white active:bg-gray-500`}>
                         <img src={currentProfileContext.profile.profilePicture || mugshot} alt="" className='rounded-full h-full' />
                         <p>Welcome back {currentProfileContext.profile.firstname}</p>
                         {
