@@ -61,6 +61,7 @@ function App() {
           <TasksContext.Provider value={{ tasks, setTasks: (tasks: Task[]) => setTasks(() => tasks) }}>
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
+                <Route path='/' element={loggedinUser ? <p>Hello {loggedinUser.firstname}</p> : <p>Sign in</p>} />
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
                 <Route path='*' element={<p>page does not exists</p>} />
