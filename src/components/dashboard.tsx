@@ -1,11 +1,13 @@
-import React, { ReactNode, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import ibosLogo from '../assets/images/ibos-logo-210.webp'
 import mugshot from '../assets/images/mugshot.png'
 import { CurrentProfileContext } from '../contextproviders'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink, Route, Routes } from 'react-router-dom'
+import { TaskCreate } from './task'
+import { TeamCreate, TeamListView } from './team'
 
-export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const Dashboard: React.FC = () => {
     const currentProfileContext = useContext(CurrentProfileContext)
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
@@ -24,7 +26,7 @@ export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
                                 <button className='p-3 w-full bg-orange-300 rounded' onClick={() => currentProfileContext.setProfile(undefined)}>Sign out</button>
                             </div>
                         }
-                    </button> : <a href='/auth' className='py-2 px-4 rounded shadow bg-orange-300 hover:shadow-black hover:bg-blue-100'>Join us</a>
+                    </button> : <Link to='/auth' className='py-2 px-4 rounded shadow bg-orange-300 hover:shadow-black hover:bg-blue-100'>Join us</Link>
                 }
                 <div id="dropdownHover" className="w-20 h-20 hidden bg-red-500 top-[calc(100%+0.5rem)] right-2">
 
@@ -44,7 +46,18 @@ export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
                         </NavLink>
                     </div>
                     <div className='w-5/6 py-4'>
-                        {children}
+                        <Routes>
+                            <Route path='/' element={<p>Home</p>} />
+                            <Route path='/about' element={<p>About</p>} />
+                        </Routes>
+                        <Route path='tasks'>
+                            <Route path='' element={<p>Task</p>} />
+                            <Route path='create' element={<TaskCreate />} />
+                        </Route>
+                        <Route path='teams'>
+                            <Route path='' element={<TeamListView />} />
+                            <Route path='create' element={<TeamCreate />} />
+                        </Route>
                     </div>
                 </div >
             ) : <p>Please Login or Signup to continue</p>}
