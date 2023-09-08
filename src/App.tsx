@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Login, Register } from './pages/authentication'
+import { Login, Register } from './views/authentication'
 import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
-import { Dashboard } from './pages/dashboard'
-import { TaskCreate } from './pages/task'
-import { TeamCreate, TeamListView } from './pages/team'
+import { Dashboard } from './views/dashboard'
+import { TaskCreate } from './views/task'
+import { TeamCreate, TeamListView } from './views/team'
 
 
 
