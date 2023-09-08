@@ -5,7 +5,7 @@ import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
 import { Dashboard } from './components/dashboard'
 import { TeamCreate, TeamListView } from './components/team'
-import { TaskCreate } from './components/task'
+import { TaskCreate, TaskListView } from './components/task'
 // import { Dashboard } from './components/dashboard'
 
 
@@ -70,7 +70,7 @@ function App() {
                 )} />
                 <Route path='/tasks' element={(
                   <Dashboard>
-                    <TeamListView />
+                    <TaskListView />
                   </Dashboard>
                 )} />
                 <Route path='/tasks/create' element={(
