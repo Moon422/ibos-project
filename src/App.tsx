@@ -62,64 +62,6 @@ function App() {
           <TasksContext.Provider value={{ tasks, setTasks: (tasks: Task[]) => setTasks(() => tasks) }}>
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
-                {/* <Route path='' element={
-                  <Dashboard>
-                    <p>Home</p>
-                  </Dashboard>
-                } />
-                <Route path='tasks'>
-                  <Route path='' element={(
-                    <Dashboard>
-                      <p>Task</p>
-                    </Dashboard>
-                  )} />
-                  <Route path='create' element={(
-                    <Dashboard>
-                      <TaskCreate />
-                    </Dashboard>
-                  )} />
-                </Route>
-                <Route path='teams'>
-                  <Route path='' element={(
-                    <Dashboard>
-                      <TeamListView />
-                    </Dashboard>
-                  )} />
-                  <Route path='create' element={(
-                    <Dashboard>
-                      <TeamCreate />
-                    </Dashboard>
-                  )} />
-                </Route>
-                <Route path='auth'>
-                  <Route path='' element={<Login />} />
-                  <Route path='register' element={<Register />} />
-                </Route> */}
-                <Route path='/' element={(
-                  <Dashboard>
-                    <p>Home</p>
-                  </Dashboard>
-                )} />
-                <Route path='/tasks' element={(
-                  <Dashboard>
-                    <p>Task</p>
-                  </Dashboard>
-                )} />
-                <Route path='/tasks/create' element={(
-                  <Dashboard>
-                    <TaskCreate />
-                  </Dashboard>
-                )} />
-                <Route path='/teams' element={(
-                  <Dashboard>
-                    <TeamListView />
-                  </Dashboard>
-                )} />
-                <Route path='/teams/create' element={(
-                  <Dashboard>
-                    <TeamCreate />
-                  </Dashboard>
-                )} />
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
                 <Route path='*' element={<p>page does not exists</p>} />
