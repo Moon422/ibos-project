@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 // import { Login, Register } from './components/authentication'
-import { Profile, Task, Team } from './model'
-import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
+// import { Profile, Task, Team } from './model'
+// import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
 // import { Dashboard } from './components/dashboard'
 // import { TaskCreate } from './components/task'
 // import { TeamCreate, TeamListView } from './components/team'
@@ -10,41 +10,46 @@ import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from 
 
 
 function App() {
-  const [loggedinUser, setLogggedinUser] = useState<Profile>()
-  const [registeredUsers, setRegisteredUser] = useState<Profile[]>([])
-  const [teams, setTeams] = useState<Team[]>([])
-  const [tasks, setTasks] = useState<Task[]>([])
+  // const [loggedinUser, setLogggedinUser] = useState<Profile>()
+  // const [registeredUsers, setRegisteredUser] = useState<Profile[]>([])
+  // const [teams, setTeams] = useState<Team[]>([])
+  // const [tasks, setTasks] = useState<Task[]>([])
 
-  useEffect(() => {
-    const userData = localStorage.getItem("users")
-    const teamData = localStorage.getItem('teams')
-    const taskData = localStorage.getItem('tasks')
+  // useEffect(() => {
+  //   const userData = localStorage.getItem("users")
+  //   const teamData = localStorage.getItem('teams')
+  //   const taskData = localStorage.getItem('tasks')
 
-    if (userData) {
-      const users = JSON.parse(userData)
-      setRegisteredUser(() => users)
-    } else {
-      localStorage.setItem("users", JSON.stringify([]))
-    }
+  //   if (userData) {
+  //     const users = JSON.parse(userData)
+  //     setRegisteredUser(() => users)
+  //   } else {
+  //     localStorage.setItem("users", JSON.stringify([]))
+  //   }
 
-    if (teamData) {
-      const teams = JSON.parse(teamData)
-      setTeams(() => teams)
-    } else {
-      localStorage.setItem('teams', JSON.stringify([]))
-    }
+  //   if (teamData) {
+  //     const teams = JSON.parse(teamData)
+  //     setTeams(() => teams)
+  //   } else {
+  //     localStorage.setItem('teams', JSON.stringify([]))
+  //   }
 
-    if (taskData) {
-      const tasks = JSON.parse(taskData)
-      setTasks(() => tasks)
-    } else {
-      localStorage.setItem('tasks', JSON.stringify([]))
-    }
-  }, [])
+  //   if (taskData) {
+  //     const tasks = JSON.parse(taskData)
+  //     setTasks(() => tasks)
+  //   } else {
+  //     localStorage.setItem('tasks', JSON.stringify([]))
+  //   }
+  // }, [])
 
   return (
     <div>
-      <UsersContext.Provider value={{
+      <Routes>
+        <Route path='/' element={<p>Home</p>} />
+        <Route path='/about' element={<p>About</p>} />
+      </Routes>
+
+      {/* <UsersContext.Provider value={{
         profiles: registeredUsers,
         setProfiles: p => setRegisteredUser(
           () => {
@@ -68,7 +73,7 @@ function App() {
             </CurrentProfileContext.Provider>
           </TasksContext.Provider>
         </TeamsContext.Provider>
-      </UsersContext.Provider>
+      </UsersContext.Provider> */}
     </div>
   )
 }
