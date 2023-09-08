@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { CurrentProfileContext, TeamsContext } from '../contextproviders'
 import { Team } from '../model'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export const TeamListView: React.FC = () => {
     const currentProfile = useContext(CurrentProfileContext)
@@ -9,6 +9,9 @@ export const TeamListView: React.FC = () => {
 
     return (
         <>
+            <div className="flex justify-end me-4 mb-4">
+                <Link to='/teams/create' className='p-2 bg-blue-300 rounded hover:shadow'>Create Team</Link>
+            </div>
             {
                 teams!.teams
                     .filter(team => team.members.includes(currentProfile!.profile!.username))
