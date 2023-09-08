@@ -5,6 +5,7 @@ import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
 import { Dashboard } from './components/dashboard'
 import { TeamCreate, TeamListView } from './components/team'
+import { TaskCreate } from './components/task'
 // import { Dashboard } from './components/dashboard'
 
 
@@ -62,22 +63,31 @@ function App() {
           <TasksContext.Provider value={{ tasks, setTasks: (tasks: Task[]) => setTasks(() => tasks) }}>
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
-                <Route path='/' element={(
+                <Route index element={(
                   <Dashboard>
-                    Hello
+                    <p>Hello</p>
+                  </Dashboard>
+                )} />
+                <Route path='/tasks' element={(
+                  <Dashboard>
+                    <TeamListView />
+                  </Dashboard>
+                )} />
+                <Route path='/tasks/create' element={(
+                  <Dashboard>
+                    <TaskCreate />
                   </Dashboard>
                 )} />
                 <Route path='/teams' element={(
                   <Dashboard>
                     <TeamListView />
                   </Dashboard>
-                )}>
-                  <Route path='/create' element={(
-                    <Dashboard>
-                      <TeamCreate />
-                    </Dashboard>
-                  )} />
-                </Route>
+                )} />
+                <Route path='/teams/create' element={(
+                  <Dashboard>
+                    <TeamCreate />
+                  </Dashboard>
+                )} />
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
                 <Route path='*' element={<p>page does not exists</p>} />

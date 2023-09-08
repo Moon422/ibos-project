@@ -1,5 +1,14 @@
 import React, { useContext } from 'react'
 import { CurrentProfileContext, TeamsContext } from '../contextproviders'
+import { Link } from 'react-router-dom'
+
+export const TaskListView: React.FC = () => {
+    return (
+        <>
+            <Link to='/teams/create'>Create</Link>
+        </>
+    )
+}
 
 export const TaskCreate: React.FC = () => {
     const currentProfile = useContext(CurrentProfileContext)
