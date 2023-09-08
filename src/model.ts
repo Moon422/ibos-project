@@ -14,8 +14,15 @@ export enum TaskPriority {
 }
 
 export interface Task {
+    id: number,
     title: string,
     description: string,
     dueDate: Date,
     priority: TaskPriority
+}
+
+export interface Team {
+    id: number,
+    title: string,
+    members: string[]
 }
