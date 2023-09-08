@@ -4,7 +4,7 @@ import { Login, Register } from './components/authentication'
 import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
 import { Dashboard } from './components/dashboard'
-import { TeamCreate, TeamListView } from './components/team'
+import { TeamCreate, TeamDetail, TeamListView } from './components/team'
 import { TaskCreate, TaskListView } from './components/task'
 // import { Dashboard } from './components/dashboard'
 
@@ -81,6 +81,11 @@ function App() {
                 <Route path='/teams' element={(
                   <Dashboard>
                     <TeamListView />
+                  </Dashboard>
+                )} />
+                <Route path='/teams/:id' element={(
+                  <Dashboard>
+                    <TeamDetail />
                   </Dashboard>
                 )} />
                 <Route path='/teams/create' element={(
