@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Login, Register } from './components/authentication'
 import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
-import { Dashboard } from './components/dashboard'
+// import { Dashboard } from './components/dashboard'
 
 
 
