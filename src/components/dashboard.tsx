@@ -1,13 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { ReactNode, useContext, useState } from 'react'
 
 import ibosLogo from '../assets/images/ibos-logo-210.webp'
 import mugshot from '../assets/images/mugshot.png'
 import { CurrentProfileContext } from '../contextproviders'
-import { Link, NavLink, Route, Routes } from 'react-router-dom'
-import { TaskCreate } from './task'
-import { TeamCreate, TeamListView } from './team'
+import { Link, NavLink } from 'react-router-dom'
 
-export const Dashboard: React.FC = () => {
+export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
     const currentProfileContext = useContext(CurrentProfileContext)
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
@@ -46,17 +44,7 @@ export const Dashboard: React.FC = () => {
                         </NavLink>
                     </div>
                     <div className='w-5/6 py-4'>
-                        <Routes>
-                            <Route path='/' element={<p>Home</p>} />
-                            <Route path='tasks'>
-                                <Route path='' element={<p>Task</p>} />
-                                <Route path='create' element={<TaskCreate />} />
-                            </Route>
-                            <Route path='teams'>
-                                <Route path='' element={<TeamListView />} />
-                                <Route path='create' element={<TeamCreate />} />
-                            </Route>
-                        </Routes>
+                        {children}
                     </div>
                 </div >
             ) : <p>Please Login or Signup to continue</p>}

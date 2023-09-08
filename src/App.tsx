@@ -3,6 +3,8 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { Login, Register } from './components/authentication'
 import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
+import { Dashboard } from './components/dashboard'
+import { TeamListView } from './components/team'
 // import { Dashboard } from './components/dashboard'
 
 
@@ -61,7 +63,16 @@ function App() {
           <TasksContext.Provider value={{ tasks, setTasks: (tasks: Task[]) => setTasks(() => tasks) }}>
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
-                <Route path='/' element={loggedinUser ? <p>Hello {loggedinUser.firstname}</p> : <p>Sign in</p>} />
+                <Route path='/' element={(
+                  <Dashboard>
+                    Hello
+                  </Dashboard>
+                )} />
+                <Route path='/teams' element={(
+                  <Dashboard>
+                    <TeamListView />
+                  </Dashboard>
+                )} />
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
                 <Route path='*' element={<p>page does not exists</p>} />
