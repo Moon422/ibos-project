@@ -67,12 +67,11 @@ function App() {
                     Hello
                   </Dashboard>
                 )} />
-                <Route path='/teams'>
-                  <Route path='/' element={(
-                    <Dashboard>
-                      <TeamListView />
-                    </Dashboard>
-                  )} />
+                <Route path='/teams' element={(
+                  <Dashboard>
+                    <TeamListView />
+                  </Dashboard>
+                )}>
                   <Route path='/create' element={(
                     <Dashboard>
                       <TeamCreate />
