@@ -4,7 +4,7 @@ import { Login, Register } from './components/authentication'
 import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
 import { Dashboard } from './components/dashboard'
-import { TeamListView } from './components/team'
+import { TeamCreate, TeamListView } from './components/team'
 // import { Dashboard } from './components/dashboard'
 
 
@@ -44,7 +44,6 @@ function App() {
 
   return (
     <>
-      <Link to='/auth'>Auth</Link>
       <UsersContext.Provider value={{
         profiles: registeredUsers,
         setProfiles: p => setRegisteredUser(
@@ -68,11 +67,18 @@ function App() {
                     Hello
                   </Dashboard>
                 )} />
-                <Route path='/teams' element={(
-                  <Dashboard>
-                    <TeamListView />
-                  </Dashboard>
-                )} />
+                <Route path='/teams'>
+                  <Route path='/' element={(
+                    <Dashboard>
+                      <TeamListView />
+                    </Dashboard>
+                  )} />
+                  <Route path='/create' element={(
+                    <Dashboard>
+                      <TeamCreate />
+                    </Dashboard>
+                  )} />
+                </Route>
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
                 <Route path='*' element={<p>page does not exists</p>} />
