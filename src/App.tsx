@@ -122,6 +122,7 @@ function App() {
                 )} />
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
+                <Route path='*' element={<p>page does not exists</p>} />
               </Routes>
             </CurrentProfileContext.Provider>
           </TasksContext.Provider>
