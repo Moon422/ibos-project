@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export const TaskListView: React.FC = () => {
     return (
         <>
-            <Link to='/teams/create'>Create</Link>
+            <Link to='/tasks/create'>Create</Link>
         </>
     )
 }
