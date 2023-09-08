@@ -110,6 +110,16 @@ function App() {
                     <TaskCreate />
                   </Dashboard>
                 )} />
+                <Route path='/teams' element={(
+                  <Dashboard>
+                    <TeamListView />
+                  </Dashboard>
+                )} />
+                <Route path='/teams/create' element={(
+                  <Dashboard>
+                    <TeamCreate />
+                  </Dashboard>
+                )} />
                 <Route path='/auth' element={<Login />} />
                 <Route path='/auth/register' element={<Register />} />
               </Routes>
