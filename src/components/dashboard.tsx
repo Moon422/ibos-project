@@ -48,16 +48,15 @@ export const Dashboard: React.FC = () => {
                     <div className='w-5/6 py-4'>
                         <Routes>
                             <Route path='/' element={<p>Home</p>} />
-                            <Route path='/about' element={<p>About</p>} />
+                            <Route path='tasks'>
+                                <Route path='' element={<p>Task</p>} />
+                                <Route path='create' element={<TaskCreate />} />
+                            </Route>
+                            <Route path='teams'>
+                                <Route path='' element={<TeamListView />} />
+                                <Route path='create' element={<TeamCreate />} />
+                            </Route>
                         </Routes>
-                        <Route path='tasks'>
-                            <Route path='' element={<p>Task</p>} />
-                            <Route path='create' element={<TaskCreate />} />
-                        </Route>
-                        <Route path='teams'>
-                            <Route path='' element={<TeamListView />} />
-                            <Route path='create' element={<TeamCreate />} />
-                        </Route>
                     </div>
                 </div >
             ) : <p>Please Login or Signup to continue</p>}
