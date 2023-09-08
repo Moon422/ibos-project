@@ -5,7 +5,7 @@ import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
 import { Dashboard } from './pages/dashboard'
 import { TaskCreate } from './pages/task'
-import { TeamCreate } from './pages/team'
+import { TeamCreate, TeamListView } from './pages/team'
 
 
 
@@ -62,7 +62,7 @@ function App() {
           <TasksContext.Provider value={{ tasks, setTasks: (tasks: Task[]) => setTasks(() => tasks) }}>
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
-                <Route path='' element={
+                {/* <Route path='' element={
                   <Dashboard>
                     <p>Home</p>
                   </Dashboard>
@@ -82,7 +82,7 @@ function App() {
                 <Route path='teams'>
                   <Route path='' element={(
                     <Dashboard>
-                      <p>Team</p>
+                      <TeamListView />
                     </Dashboard>
                   )} />
                   <Route path='create' element={(
@@ -94,7 +94,24 @@ function App() {
                 <Route path='auth'>
                   <Route path='' element={<Login />} />
                   <Route path='register' element={<Register />} />
-                </Route>
+                </Route> */}
+                <Route path='/' element={(
+                  <Dashboard>
+                    <p>Home</p>
+                  </Dashboard>
+                )} />
+                <Route path='/tasks' element={(
+                  <Dashboard>
+                    <p>Task</p>
+                  </Dashboard>
+                )} />
+                <Route path='/tasks/create' element={(
+                  <Dashboard>
+                    <TaskCreate />
+                  </Dashboard>
+                )} />
+                <Route path='/auth' element={<Login />} />
+                <Route path='/auth/register' element={<Register />} />
               </Routes>
             </CurrentProfileContext.Provider>
           </TasksContext.Provider>

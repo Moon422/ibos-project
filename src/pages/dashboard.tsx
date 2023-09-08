@@ -39,7 +39,7 @@ export const Dashboard: React.FC<{ children: ReactElement }> = ({ children }) =>
                         <NavLink to='/tasks/create' className={({ isActive }) => isActive ? 'p-4 bg-25306e' : 'p-4 bg-25306e bg-opacity-90 hover:bg-opacity-70'}>
                             Tasks
                         </NavLink>
-                        <NavLink to='/teams/create' className={({ isActive }) => isActive ? 'p-4 bg-25306e' : 'p-4 bg-25306e bg-opacity-90 hover:bg-opacity-70'}>
+                        <NavLink to='/teams' className={({ isActive }) => isActive ? 'p-4 bg-25306e' : 'p-4 bg-25306e bg-opacity-90 hover:bg-opacity-70'}>
                             Teams
                         </NavLink>
                     </div>

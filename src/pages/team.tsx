@@ -3,6 +3,30 @@ import { CurrentProfileContext, TeamsContext } from '../contextproviders'
 import { Team } from '../model'
 import { useNavigate } from 'react-router-dom'
 
+export const TeamListView: React.FC = () => {
+    const currentProfile = useContext(CurrentProfileContext)
+    const teams = useContext(TeamsContext)
+
+    return (
+        <>
+            {
+                teams!.teams
+                    .filter(team => team.members.includes(currentProfile!.profile!.username))
+                    .map((team, idx) => (
+                        <a href={`/teams/${team.id}`} key={idx}>
+                            <div className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                <h4>{team.title}</h4>
+                                <p>Member Count: {team.members.length}</p>
+                            </div>
+                        </a>
+                    ))
+            }
+        </>
+    )
+}
+
+// export const TeamView: React.FC()
+
 export const TeamCreate: React.FC = () => {
     const currentProfile = useContext(CurrentProfileContext)
     const teams = useContext(TeamsContext)
