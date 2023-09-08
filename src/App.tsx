@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import { Login, Register } from './components/authentication'
 import { Profile, Task, Team } from './model'
 import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
@@ -42,6 +42,7 @@ function App() {
 
   return (
     <>
+      <Link to='/auth'>Auth</Link>
       <UsersContext.Provider value={{
         profiles: registeredUsers,
         setProfiles: p => setRegisteredUser(
