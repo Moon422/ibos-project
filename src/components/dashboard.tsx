@@ -1,11 +1,11 @@
-import React, { ReactElement, useContext, useState } from 'react'
+import React, { ReactNode, useContext, useState } from 'react'
 
 import ibosLogo from '../assets/images/ibos-logo-210.webp'
 import mugshot from '../assets/images/mugshot.png'
 import { CurrentProfileContext } from '../contextproviders'
 import { NavLink } from 'react-router-dom'
 
-export const Dashboard: React.FC<{ children: ReactElement }> = ({ children }) => {
+export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
     const currentProfileContext = useContext(CurrentProfileContext)
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
