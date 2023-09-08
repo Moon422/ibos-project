@@ -1,5 +1,5 @@
 // import { useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 // import { Login, Register } from './components/authentication'
 // import { Profile, Task, Team } from './model'
 // import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
@@ -44,6 +44,7 @@ function App() {
 
   return (
     <div>
+      <Link to="/about">ABcou</Link>
       <Routes>
         <Route path='/' element={<p>Home</p>} />
         <Route path='/about' element={<p>About</p>} />
