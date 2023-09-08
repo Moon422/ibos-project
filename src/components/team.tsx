@@ -68,8 +68,30 @@ export const TeamDetail: React.FC = () => {
 }
 
 export const TeamAddMember: React.FC = () => {
+    const { id } = useParams()
+    const teams = useContext(TeamsContext)
+    const users = useContext(UsersContext)
+    const [team, setTeam] = useState<Team>()
+
+    useEffect(() => {
+        const idNum = parseInt(id!)
+
+        const t = teams!.teams.find((_team) => _team.id === idNum)
+        if (t) {
+            console.log(t)
+            setTeam(() => t)
+        }
+    }, [])
+
     const onAddTeamMemberFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
+
+        const formData = new FormData(e.currentTarget)
+        // const username = formData.get('member')!.toString()
+
+        // const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
+        // team!.members.push(username)
+        // const teamRecords = [...teams!.teams.slice(0, teamIdx), team, ...teams!.teams.slice(teamIdx + 1)]
     }
 
     return (
@@ -79,10 +101,14 @@ export const TeamAddMember: React.FC = () => {
                 <h1 className='text-center text-292f7b'>iBos Task Management Tool</h1>
                 <hr className='mb-16' />
                 <div className="flex items-start mb-4">
-                    <label htmlFor="name" className='w-1/6 p-2'>Name</label>
-                    <input type="text" name="name" id="name" required className='drop-shadow border rounded w-5/6 p-2 focus:outline-none focus:border-0 focus:border-b-2 focus:border-blue-500' placeholder='Name' />
+                    <label htmlFor="member" className='w-1/6 p-2'>Member</label>
+                    <select name="member" id="member" required className='bg-white drop-shadow border rounded w-5/6 p-2 focus:outline-none focus:border-0 focus:border-b-2 focus:border-blue-500'>
+                        {
+                            users?.profiles.filter(user => !(team?.members.includes(user.username))).map((user, idx) => <option value={user.username} key={idx}>{user.firstname} {user.lastname}</option>)
+                        }
+                    </select>
                 </div>
-                <button type="submit" className='w-full bg-blue-500 p-2 rounded text-white mb-4'>Create Team</button>
+                <button type="submit" className='w-full bg-blue-500 p-2 rounded text-white mb-4'>Add to Team</button>
             </form>
 
         </>
