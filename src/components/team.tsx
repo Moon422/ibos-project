@@ -86,7 +86,7 @@ export const TeamAddMember: React.FC = () => {
     const onAddTeamMemberFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
 
-        const formData = new FormData(e.currentTarget)
+        // const formData = new FormData(e.currentTarget)
         // const username = formData.get('member')!.toString()
 
         // const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
