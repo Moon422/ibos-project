@@ -1,11 +1,42 @@
 import React, { useContext } from 'react'
-import { CurrentProfileContext, TeamsContext } from '../contextproviders'
-import { Link } from 'react-router-dom'
+import { CurrentProfileContext, TasksContext, TeamsContext } from '../contextproviders'
+import { Link, useNavigate } from 'react-router-dom'
+import { Task } from '../model'
 
 export const TaskListView: React.FC = () => {
+    const currentProfile = useContext(CurrentProfileContext)
+    const teams = useContext(TeamsContext)
+    const tasks = useContext(TasksContext)
+
     return (
         <>
-            <Link to='/tasks/create'>Create</Link>
+            <div className="flex justify-between items-center pe-4 mb-4">
+                <h3>Tasks</h3>
+                <Link to='/tasks/create' className='p-2 bg-blue-500 text-white rounded hover:shadow'>Create Task</Link>
+            </div>
+            {
+                teams!.teams
+                    .filter(team => team.members.includes(currentProfile!.profile!.username))
+                    .map((team, idx) => (
+                        <>
+                            <div className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                <h4>{team.title}</h4>
+                                <p>Member Count: {team.members.length}</p>
+                            </div>
+                            {
+                                tasks!.tasks
+                                    .filter((task) => task.teamId === team.id)
+                                    .map((task, idx) => (
+                                        <div className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                            <h6>{task.title}</h6>
+                                            <p>{task.dueDate.toString()}</p>
+                                            <p>{task.priority}</p>
+                                        </div>
+                                    ))
+                            }
+                        </>
+                    ))
+            }
         </>
     )
 }
@@ -13,9 +44,29 @@ export const TaskListView: React.FC = () => {
 export const TaskCreate: React.FC = () => {
     const currentProfile = useContext(CurrentProfileContext)
     const teams = useContext(TeamsContext)
+    const tasks = useContext(TasksContext)
+    const navigate = useNavigate()
 
     const onCreateTaskFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
+
+        const formdata = new FormData(e.currentTarget)
+
+        const title = formdata.get('title')!.toString()
+        const description = formdata.get('description')!.toString()
+        const dueDate = new Date(formdata.get('duedate')!.toString())
+        const priority = parseInt(formdata.get('priority')!.toString())
+        const teamId = parseInt(formdata.get('team')!.toString())
+
+        const task: Task = {
+            id: tasks!.tasks.length, title, description, dueDate, priority, teamId
+        }
+
+        tasks!.setTasks([task, ...tasks!.tasks])
+
+        e.currentTarget.reset()
+
+        navigate('/tasks')
     }
 
     return (

@@ -60,7 +60,12 @@ function App() {
             return teams
           })
         }}>
-          <TasksContext.Provider value={{ tasks, setTasks: (tasks: Task[]) => setTasks(() => tasks) }}>
+          <TasksContext.Provider value={{
+            tasks, setTasks: (tasks: Task[]) => setTasks(() => {
+              localStorage.setItem('tasks', JSON.stringify(tasks))
+              return tasks
+            })
+          }}>
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
                 <Route index element={(

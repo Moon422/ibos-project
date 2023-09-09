@@ -18,7 +18,8 @@ export interface Task {
     title: string,
     description: string,
     dueDate: Date,
-    priority: TaskPriority
+    priority: TaskPriority,
+    teamId: number,
 }
 
 export interface Team {
