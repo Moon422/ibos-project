@@ -17,7 +17,7 @@ export const TaskListView: React.FC = () => {
             {
                 teams!.teams
                     .filter(team => team.members.includes(currentProfile!.profile!.username))
-                    .map((team, idx) => (
+                    .map((team, teamIdx) => (
                         <>
                             <div className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
                                 <h4>{team.title}</h4>
@@ -26,8 +26,8 @@ export const TaskListView: React.FC = () => {
                             {
                                 tasks!.tasks
                                     .filter((task) => task.teamId === team.id)
-                                    .map((task, idx) => (
-                                        <div className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                    .map((task, taskIdx) => (
+                                        <div key={teamIdx * 100 + taskIdx} className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
                                             <h6>{task.title}</h6>
                                             <p>{task.dueDate.toString()}</p>
                                             <p>{task.priority}</p>
