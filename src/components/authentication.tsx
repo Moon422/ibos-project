@@ -1,5 +1,5 @@
 import { FormEvent, useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { CurrentProfileContext, UsersContext } from '../contextproviders'
 
 const Login: React.FC = () => {
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
                 <p className='text-center'>
                     Do not have an account?
                     <br />
-                    <a href="/auth/register" className='text-sm bg-orange-400 bg-opacity-20 p-1 rounded hover:bg-opacity-40'>Create Account</a>
+                    <Link to="/auth/register" className='text-sm bg-orange-400 bg-opacity-20 p-1 rounded hover:bg-opacity-40'>Create Account</Link>
                 </p>
             </form>
         </div>
@@ -125,7 +125,7 @@ const Register: React.FC = () => {
                 <p className='text-center'>
                     Alread have an account?
                     <br />
-                    <a href="/auth" className='text-sm bg-orange-400 bg-opacity-20 p-1 rounded hover:bg-opacity-40'>Sign in</a>
+                    <Link to="/auth" className='text-sm bg-orange-400 bg-opacity-20 p-1 rounded hover:bg-opacity-40'>Sign in</Link>
                 </p>
             </form>
         </div>
