@@ -151,7 +151,7 @@ export const TeamInviteMember: React.FC = () => {
                     <label htmlFor="member" className='w-1/6 p-2'>Member</label>
                     <select name="member" id="member" required className='bg-white drop-shadow border rounded w-5/6 p-2 focus:outline-none focus:border-0 focus:border-b-2 focus:border-blue-500'>
                         {
-                            users?.profiles.filter(user => !(team?.members.includes(user.username))).map((user, idx) => <option value={user.username} key={idx}>{user.firstname} {user.lastname}</option>)
+                            users?.profiles.filter(user => !(team?.members.includes(user.username)) && !(invitations?.invitations.filter(invitation => invitation.teamId === team?.id).map(invitation => invitation.memberId).includes(user.username))).map((user, idx) => <option value={user.username} key={idx}>{user.firstname} {user.lastname}</option>)
                         }
                     </select>
                 </div>
