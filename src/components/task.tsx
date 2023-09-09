@@ -33,7 +33,7 @@ const TaskListItem: React.FC<{ task: Task }> = ({ task }) => {
     }
 
     return (
-        <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow rounded px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'}`}>
+        <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow rounded px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'} hover:cursor-pointer`}>
             <h6 className={`${editable ? 'w-5/12' : 'w-6/12'}`}>{task.title}</h6>
             <p className='w-4/12'>{moment(task.dueDate).format('hh:mm a, Do MMM (dddd)')}</p>
             <p className={`w-1/12 ${editable ? 'hidden' : ''}`}>{['Low', 'Medium', 'High'][task.priority]}</p>
@@ -87,8 +87,9 @@ export const TaskListView: React.FC = () => {
                                         return (
                                             <div className='shadow rounded mb-4 me-4 border border-transparent hover:border-inherit'>
                                                 <div className='flex items-center justify-between px-4'>
-                                                    <h4>{team.title}</h4>
-                                                    <p>Member Count: {team.members.length}</p>
+                                                    <div className="w-2/12"></div>
+                                                    <h4 className='w-8/12 text-center'>{team.title}</h4>
+                                                    <p className='w-2/12 text-end'>Member Count: {team.members.length}</p>
                                                 </div>
                                                 <div className='rounded bg-neutral-600'>
                                                     <div className='flex items-center px-4 text-white'>
