@@ -12,7 +12,7 @@ export const TeamListView: React.FC = () => {
     return (
         <>
             <div className="flex justify-end me-4 mb-4">
-                <Link to='/teams/create' className='p-2 bg-blue-500 rounded hover:shadow'>Create Team</Link>
+                <Link to='/teams/create' className='p-2 bg-blue-500 text-white rounded hover:shadow'>Create Team</Link>
             </div>
             {
                 teams!.teams
@@ -49,7 +49,7 @@ export const TeamDetail: React.FC = () => {
         <>
             <div>
                 <div className="flex justify-end pe-4 mb-4">
-                    <Link to={`/teams/${id}/add`} className='p-2 bg-blue-500 rounded hover:shadow'>Add Member</Link>
+                    <Link to={`/teams/${id}/add`} className='p-2 bg-blue-500 text-white rounded hover:shadow'>Add Member</Link>
                 </div>
                 {users?.profiles.filter((user) => team?.members.includes(user.username)).map((user, idx) => (
                     <div key={idx} className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
