@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { CurrentProfileContext, TasksContext, TeamsContext } from '../contextproviders'
 import { Link, useNavigate } from 'react-router-dom'
-import { Task } from '../model'
+import { Task, TaskStatus } from '../model'
 
 export const TaskListView: React.FC = () => {
     const currentProfile = useContext(CurrentProfileContext)
@@ -25,8 +25,9 @@ export const TaskListView: React.FC = () => {
                             </div>
                             <div className='flex items-center shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
                                 <h6 className='w-6/12'>Task Title</h6>
-                                <p className='w-3/12'>Due Date</p>
-                                <p className='w-3/12'>Priority</p>
+                                <p className='w-4/12'>Due Date</p>
+                                <p className='w-1/12'>Priority</p>
+                                <p className='w-1/12'>Task Status</p>
                             </div>
                             {
                                 tasks!.tasks
@@ -34,8 +35,9 @@ export const TaskListView: React.FC = () => {
                                     .map((task, taskIdx) => (
                                         <div key={teamIdx * 100 + taskIdx} className='flex items-center shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
                                             <h6 className='w-6/12'>{task.title}</h6>
-                                            <p className='w-3/12'>{task.dueDate.toString()}</p>
-                                            <p className='w-3/12'>{task.priority}</p>
+                                            <p className='w-4/12'>{task.dueDate.toString()}</p>
+                                            <p className='w-1/12'>{task.priority}</p>
+                                            <p className='w-1/12'>{task.taskStatus}</p>
                                         </div>
                                     ))
                             }
@@ -64,7 +66,7 @@ export const TaskCreate: React.FC = () => {
         const teamId = parseInt(formdata.get('team')!.toString())
 
         const task: Task = {
-            id: tasks!.tasks.length, title, description, dueDate, priority, teamId
+            id: tasks!.tasks.length, taskStatus: TaskStatus.NOT_STARTED, title, description, dueDate, priority, teamId
         }
 
         tasks!.setTasks([task, ...tasks!.tasks])

@@ -13,6 +13,12 @@ export enum TaskPriority {
     HIGH,
 }
 
+export enum TaskStatus {
+    NOT_STARTED,
+    STARTED,
+    COMPLETED
+}
+
 export interface Task {
     id: number,
     title: string,
@@ -20,6 +26,7 @@ export interface Task {
     dueDate: Date,
     priority: TaskPriority,
     teamId: number,
+    taskStatus: TaskStatus
 }
 
 export interface Team {
