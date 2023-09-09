@@ -32,6 +32,8 @@ const TaskListItem: React.FC<{ task: Task, first: boolean, last: boolean }> = ({
         setEditable(() => false)
     }
 
+    console.log(moment(task.dueDate))
+
     return (
         <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'} ${first ? 'rounded-t' : ''} ${last ? 'rounded-b' : ''} hover:cursor-pointer bg-opacity-80 ${editable ? 'bg-opacity-100' : 'hover:bg-opacity-100'}`}>
             <h6 className={`${editable ? 'w-5/12' : 'w-6/12'}`}>{task.title}</h6>
@@ -80,28 +82,72 @@ export const TaskListView: React.FC = () => {
                         <>
                             {
                                 (() => {
+                                    const [showFilter, setShowFilter] = useState<boolean>(false)
+                                    const [startDate, setStartData] = useState<Date | null>()
+                                    const [endData, setEndData] = useState<Date | null>()
+                                    const [status, setStatus] = useState<number>(3)
+                                    const [sortByPriorityDesc, setSortByPriorityDesc] = useState<boolean>(false)
+                                    const [sortByDueDateDesc, setSortByDueDateDesc] = useState<boolean>(false)
+
                                     const tasksByTeam = tasks!.tasks
                                         .filter((task) => task.teamId === team.id)
 
                                     if (tasksByTeam.length > 0) {
+                                        const filtered = tasksByTeam
+                                            .filter((task) => !startDate || moment(task.dueDate).diff(startDate) >= 0)
+                                            .filter((task) => !endData || moment(endData).diff(task.dueDate) >= 0)
+                                            .filter((task) => status === 3 || task.taskStatus === status)
+                                            .sort((a, b) => sortByDueDateDesc ? moment(b.dueDate).diff(a.dueDate) : moment(a.dueDate).diff(b.dueDate))
+                                            .sort((a, b) => sortByPriorityDesc ? b.priority - a.priority : a.priority - b.priority)
+
                                         return (
                                             <div className='shadow rounded mb-4 me-4 hover:shadow-black'>
-                                                <div className='flex items-center justify-between px-4'>
-                                                    <div className="w-2/12"></div>
-                                                    <h4 className='w-8/12 text-center'>{team.title}</h4>
-                                                    <p className='w-2/12 text-end'>Member Count: {team.members.length}</p>
+                                                <div className='flex items-center px-4'>
+                                                    <h4 className='w-10/12'>{team.title}</h4>
+                                                    <p className='w-1/12'>Member Count: {team.members.length}</p>
+                                                    <button className='w-1/12 p-1' onClick={() => setShowFilter((v) => !v)}>Filters</button>
+                                                </div>
+                                                <div className={`w-96 ms-auto p-4 ${showFilter ? '' : 'hidden'}`}>
+                                                    <div className='flex gap-2 mb-1'>
+                                                        <label htmlFor="start" className='w-2/6 p-2'>Starting Date</label>
+                                                        <input className='w-4/6 p-2 rounded' type="date" name="start" id="start" onChange={e => {
+                                                            console.log(moment(e.target.value))
+                                                            setStartData(() => e.target.value.length ? new Date(e.target.value) : null)
+                                                        }} />
+                                                    </div>
+                                                    <div className="flex gap-2 mb-1">
+                                                        <label className='w-2/6 p-2' htmlFor="end">Ending Date</label>
+                                                        <input className='w-4/6 p-2 rounded' type="date" name="end" id="end" onChange={e => {
+                                                            setEndData(() => e.target.value.length ? new Date(e.target.value) : null)
+                                                        }} />
+                                                    </div>
+                                                    <div className="flex gap-2 mb-1">
+                                                        <label className='w-2/6 p-2' htmlFor="status">Task Status</label>
+                                                        <select className='w-4/6 p-2 rounded' name="status" id="status" value={status} onChange={e => setStatus(() => parseInt(e.target.value))} >
+                                                            <option value={0}>Not Started</option>
+                                                            <option value={1}>Started</option>
+                                                            <option value={2}>Completed</option>
+                                                            <option value={3}>All</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div className='rounded bg-neutral-600'>
                                                     <div className='flex items-center px-4 text-white'>
                                                         <h6 className='w-6/12'>Task Title</h6>
-                                                        <p className='w-4/12'>Due Date</p>
-                                                        <p className='w-1/12'>Priority</p>
+                                                        <p onClick={e => {
+                                                            e.preventDefault()
+                                                            setSortByDueDateDesc((v) => !v)
+                                                        }} className='w-4/12'>Due Date {sortByDueDateDesc ? '(Desc)' : '(Asc)'}</p>
+                                                        <p onClick={e => {
+                                                            e.preventDefault()
+                                                            setSortByPriorityDesc((v) => !v)
+                                                        }} className='w-1/12'>Priority {sortByPriorityDesc ? '(High)' : '(Low)'}</p>
                                                         <p className='w-1/12'>Task Status</p>
                                                     </div>
                                                     <div className="p-1">
                                                         {
-                                                            tasksByTeam.map((task, taskIdx) => (
-                                                                <TaskListItem task={task} key={teamIdx * 100 + taskIdx} first={taskIdx === 0} last={taskIdx === (tasksByTeam.length - 1)} />
+                                                            filtered.map((task, taskIdx) => (
+                                                                <TaskListItem task={task} key={teamIdx * 100 + taskIdx} first={taskIdx === 0} last={taskIdx === (filtered.length - 1)} />
                                                             ))
                                                         }
                                                     </div>
