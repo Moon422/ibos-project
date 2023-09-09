@@ -11,7 +11,8 @@ export const TeamListView: React.FC = () => {
 
     return (
         <>
-            <div className="flex justify-end me-4 mb-4">
+            <div className="flex justify-between items-center pe-4 mb-4">
+                <h3>Teams</h3>
                 <Link to='/teams/create' className='p-2 bg-blue-500 text-white rounded hover:shadow'>Create Team</Link>
             </div>
             {
