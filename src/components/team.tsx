@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { CurrentProfileContext, TeamsContext, UsersContext } from '../contextproviders'
-import { Team } from '../model'
+import { CurrentProfileContext, TeamInvitationContext, TeamsContext, UsersContext } from '../contextproviders'
+import { InvitationStatus, Team, TeamInvitation } from '../model'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import mugshot from '../assets/images/mugshot.png'
@@ -8,6 +8,7 @@ import mugshot from '../assets/images/mugshot.png'
 export const TeamListView: React.FC = () => {
     const currentProfile = useContext(CurrentProfileContext)
     const teams = useContext(TeamsContext)
+    const invitations = useContext(TeamInvitationContext)
 
     return (
         <>
@@ -26,6 +27,33 @@ export const TeamListView: React.FC = () => {
                             </div>
                         </Link>
                     ))
+            }
+            <h3 className='mt-10'>Invitations</h3>
+            {
+                invitations!.invitations
+                    .filter(invitation => invitation.memberId === currentProfile!.profile!.username)
+                    .map((invitation, idx) => {
+                        const team = teams!.teams.find(t => t.id === invitation.teamId)
+
+                        const onResetBtnClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+                            e.preventDefault()
+                        }
+
+                        const onSubmitBtnClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+                            e.preventDefault()
+                        }
+
+                        return (
+                            <div key={idx} className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                <h4 className='w-8/12'>{team!.title}</h4>
+                                <p className='w-2/12'>Member Count: {team!.members.length}</p>
+                                <div className='w-2/12 flex text-white'>
+                                    <button type='reset' className='p-1 w-1/2 bg-red-500 rounded-s' onClick={e => onResetBtnClicked(e)}>Reject</button>
+                                    <button type='submit' className='p-1 w-1/2 bg-blue-500 rounded-e' onClick={e => onSubmitBtnClicked(e)}>Accept</button>
+                                </div>
+                            </div>
+                        )
+                    })
             }
         </>
     )
@@ -71,10 +99,11 @@ export const TeamDetail: React.FC = () => {
     )
 }
 
-export const TeamAddMember: React.FC = () => {
+export const TeamInviteMember: React.FC = () => {
     const { id } = useParams()
     const teams = useContext(TeamsContext)
     const users = useContext(UsersContext)
+    const invitations = useContext(TeamInvitationContext)
     const [team, setTeam] = useState<Team>()
     const navigate = useNavigate()
 
@@ -94,10 +123,20 @@ export const TeamAddMember: React.FC = () => {
         const formData = new FormData(e.currentTarget)
         const username = formData.get('member')!.toString()
 
-        const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
-        team!.members.push(username)
-        const teamRecords = [...teams!.teams.slice(0, teamIdx), team!, ...teams!.teams.slice(teamIdx + 1)]
-        teams!.setTeams(teamRecords)
+        const invitation: TeamInvitation = {
+            id: invitations!.invitations.length,
+            memberId: username,
+            teamId: team!.id,
+            invitationStatus: InvitationStatus.PENDING
+        }
+
+        // const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
+        // team!.members.push(username)
+        // const teamRecords = [...teams!.teams.slice(0, teamIdx), team!, ...teams!.teams.slice(teamIdx + 1)]
+        // teams!.setTeams(teamRecords)
+
+        invitations!.setInvitations([...invitations!.invitations, invitation])
+
         e.currentTarget.reset()
         navigate(`/teams/${id}`)
     }

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Login, Register } from './components/authentication'
-import { Profile, Task, Team } from './model'
-import { CurrentProfileContext, TasksContext, TeamsContext, UsersContext } from './contextproviders'
+import { Profile, Task, Team, TeamInvitation } from './model'
+import { CurrentProfileContext, TasksContext, TeamInvitationContext, TeamsContext, UsersContext } from './contextproviders'
 import { Dashboard } from './components/dashboard'
-import { TeamAddMember, TeamCreate, TeamDetail, TeamListView } from './components/team'
+import { TeamInviteMember, TeamCreate, TeamDetail, TeamListView } from './components/team'
 import { TaskCreate, TaskListView } from './components/task'
-// import { Dashboard } from './components/dashboard'
 
 
 
@@ -15,11 +14,13 @@ function App() {
   const [registeredUsers, setRegisteredUser] = useState<Profile[]>([])
   const [teams, setTeams] = useState<Team[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
+  const [invitations, setInvitations] = useState<TeamInvitation[]>([])
 
   useEffect(() => {
     const userData = localStorage.getItem("users")
     const teamData = localStorage.getItem('teams')
     const taskData = localStorage.getItem('tasks')
+    const invitationData = localStorage.getItem('invitations')
 
     if (userData) {
       const users = JSON.parse(userData)
@@ -41,10 +42,22 @@ function App() {
     } else {
       localStorage.setItem('tasks', JSON.stringify([]))
     }
+
+    if (invitationData) {
+      const invitations = JSON.parse(invitationData)
+      setInvitations(() => invitations)
+    } else {
+      localStorage.setItem('invitations', JSON.stringify([]))
+    }
   }, [])
 
   return (
-    <>
+    <TeamInvitationContext.Provider value={{
+      invitations, setInvitations: i => setInvitations(() => {
+        localStorage.setItem('invitations', JSON.stringify(i))
+        return i
+      })
+    }}>
       <UsersContext.Provider value={{
         profiles: registeredUsers,
         setProfiles: p => setRegisteredUser(
@@ -95,7 +108,7 @@ function App() {
                 )} />
                 <Route path='/teams/:id/add' element={(
                   <Dashboard>
-                    <TeamAddMember />
+                    <TeamInviteMember />
                   </Dashboard>
                 )} />
                 <Route path='/teams/create' element={(
@@ -111,7 +124,7 @@ function App() {
           </TasksContext.Provider>
         </TeamsContext.Provider>
       </UsersContext.Provider>
-    </>
+    </TeamInvitationContext.Provider>
   )
 }
 
