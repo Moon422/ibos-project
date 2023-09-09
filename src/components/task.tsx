@@ -85,7 +85,7 @@ export const TaskListView: React.FC = () => {
 
                                     if (tasksByTeam.length > 0) {
                                         return (
-                                            <div className='shadow rounded mb-4 me-4 border border-transparent hover:border-inherit'>
+                                            <div className='shadow rounded mb-4 me-4 hover:shadow-black'>
                                                 <div className='flex items-center justify-between px-4'>
                                                     <div className="w-2/12"></div>
                                                     <h4 className='w-8/12 text-center'>{team.title}</h4>
