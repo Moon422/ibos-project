@@ -23,14 +23,19 @@ export const TaskListView: React.FC = () => {
                                 <h4>{team.title}</h4>
                                 <p>Member Count: {team.members.length}</p>
                             </div>
+                            <div className='flex justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                <h6 className='w-6/12'>Task Title</h6>
+                                <p className='w-3/12'>Due Date</p>
+                                <p className='w-3/12'>Priority</p>
+                            </div>
                             {
                                 tasks!.tasks
                                     .filter((task) => task.teamId === team.id)
                                     .map((task, taskIdx) => (
-                                        <div key={teamIdx * 100 + taskIdx} className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
-                                            <h6>{task.title}</h6>
-                                            <p>{task.dueDate.toString()}</p>
-                                            <p>{task.priority}</p>
+                                        <div key={teamIdx * 100 + taskIdx} className='flex justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                                            <h6 className='w-6/12'>{task.title}</h6>
+                                            <p className='w-3/12'>{task.dueDate.toString()}</p>
+                                            <p className='w-3/12'>{task.priority}</p>
                                         </div>
                                     ))
                             }
