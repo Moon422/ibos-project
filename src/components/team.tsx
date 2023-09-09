@@ -32,15 +32,29 @@ export const TeamListView: React.FC = () => {
             {
                 invitations!.invitations
                     .filter(invitation => invitation.memberId === currentProfile!.profile!.username)
+                    .filter(invitation => invitation.invitationStatus === InvitationStatus.PENDING)
                     .map((invitation, idx) => {
                         const team = teams!.teams.find(t => t.id === invitation.teamId)
 
                         const onResetBtnClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
                             e.preventDefault()
+
+                            const invitationIdx = invitations!.invitations.findIndex(_invitation => _invitation.id === invitation.id)
+                            invitation.invitationStatus = InvitationStatus.REJECTED
+                            invitations!.setInvitations([...invitations!.invitations.slice(0, invitationIdx), invitation, ...invitations!.invitations.slice(invitationIdx + 1)])
                         }
 
                         const onSubmitBtnClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
                             e.preventDefault()
+
+                            const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
+                            team!.members.push(currentProfile!.profile!.username)
+                            const teamRecords = [...teams!.teams.slice(0, teamIdx), team!, ...teams!.teams.slice(teamIdx + 1)]
+                            teams!.setTeams(teamRecords)
+
+                            const invitationIdx = invitations!.invitations.findIndex(_invitation => _invitation.id === invitation.id)
+                            invitation.invitationStatus = InvitationStatus.ACCEPTED
+                            invitations!.setInvitations([...invitations!.invitations.slice(0, invitationIdx), invitation, ...invitations!.invitations.slice(invitationIdx + 1)])
                         }
 
                         return (
