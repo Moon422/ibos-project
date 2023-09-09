@@ -33,7 +33,7 @@ const TaskListItem: React.FC<{ task: Task, first: boolean, last: boolean }> = ({
     }
 
     return (
-        <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'} ${first ? 'rounded-t' : ''} ${last ? 'rounded-b' : ''} hover:cursor-pointer`}>
+        <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'} ${first ? 'rounded-t' : ''} ${last ? 'rounded-b' : ''} hover:cursor-pointer bg-opacity-80 ${editable ? 'bg-opacity-100' : 'hover:bg-opacity-100'}`}>
             <h6 className={`${editable ? 'w-5/12' : 'w-6/12'}`}>{task.title}</h6>
             <p className='w-4/12'>{moment(task.dueDate).format('hh:mm a, Do MMM (dddd)')}</p>
             <p className={`w-1/12 ${editable ? 'hidden' : ''}`}>{['Low', 'Medium', 'High'][task.priority]}</p>
