@@ -75,6 +75,7 @@ export const TeamAddMember: React.FC = () => {
     const teams = useContext(TeamsContext)
     const users = useContext(UsersContext)
     const [team, setTeam] = useState<Team>()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const idNum = parseInt(id!)
@@ -89,12 +90,15 @@ export const TeamAddMember: React.FC = () => {
     const onAddTeamMemberFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault()
 
-        // const formData = new FormData(e.currentTarget)
-        // const username = formData.get('member')!.toString()
+        const formData = new FormData(e.currentTarget)
+        const username = formData.get('member')!.toString()
 
-        // const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
-        // team!.members.push(username)
-        // const teamRecords = [...teams!.teams.slice(0, teamIdx), team, ...teams!.teams.slice(teamIdx + 1)]
+        const teamIdx = teams!.teams.findIndex((_team) => _team.id === team!.id)
+        team!.members.push(username)
+        const teamRecords = [...teams!.teams.slice(0, teamIdx), team!, ...teams!.teams.slice(teamIdx + 1)]
+        teams!.setTeams(teamRecords)
+        e.currentTarget.reset()
+        navigate(`/teams/${id}`)
     }
 
     return (
