@@ -47,21 +47,24 @@ export const TeamDetail: React.FC = () => {
 
     return (
         <>
-            <div>
-                <div className="flex justify-end pe-4 mb-4">
-                    <Link to={`/teams/${id}/add`} className='p-2 bg-blue-500 text-white rounded hover:shadow'>Add Member</Link>
-                </div>
-                {users?.profiles.filter((user) => team?.members.includes(user.username)).map((user, idx) => (
-                    <div key={idx} className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
-                        <div className="flex gap-4 items-center">
-                            <div className='h-10'>
-                                <img src={user.profilePicture ?? mugshot} className='rounded-full h-full' />
-                            </div>
-                            <h4>{user.firstname} {user.lastname}</h4>
+            <div className="flex justify-between items-center pe-4 mb-4">
+                <h3>Members</h3>
+                <Link to={`/teams/${id}/add`} className='p-2 bg-blue-500 text-white rounded hover:shadow'>Add Member</Link>
+            </div>
+            {users?.profiles.filter((user) => team?.members.includes(user.username)).map((user, idx) => (
+                <div key={idx} className='flex items-center justify-between shadow rounded mb-4 me-4 px-4 border border-transparent hover:border-inherit'>
+                    <div className="flex gap-4 items-center">
+                        <div className='h-10'>
+                            <img src={user.profilePicture ?? mugshot} className='rounded-full h-full' />
                         </div>
-                        <p>{user.username}</p>
+                        <h4>{user.firstname} {user.lastname}</h4>
                     </div>
-                ))}
+                    <p>{user.username}</p>
+                </div>
+            ))}
+            <div className="flex justify-between items-center pe-4 mb-4">
+                <h3>Tasks</h3>
+                <Link to={`/teams/${id}/add`} className='p-2 bg-blue-500 text-white rounded hover:shadow'>Add Task</Link>
             </div>
         </>
     )
