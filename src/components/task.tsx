@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Task, TaskPriority, TaskStatus } from '../model'
 import moment from 'moment'
 
-const TaskListItem: React.FC<{ task: Task }> = ({ task }) => {
+const TaskListItem: React.FC<{ task: Task, first: boolean, last: boolean }> = ({ task, first, last }) => {
     const [editable, setEditable] = useState<boolean>(false)
     const [priority, setPriority] = useState<TaskPriority>(task.priority)
     const [taskStatus, setTaskStatus] = useState<TaskStatus>(task.taskStatus)
@@ -33,7 +33,7 @@ const TaskListItem: React.FC<{ task: Task }> = ({ task }) => {
     }
 
     return (
-        <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow rounded px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'} hover:cursor-pointer`}>
+        <div onClick={() => setEditable((v) => !v)} className={`flex items-center shadow px-4 ${task.taskStatus === TaskStatus.NOT_STARTED ? 'bg-red-300' : task.taskStatus === TaskStatus.STARTED ? 'bg-blue-300' : 'bg-green-300'} ${first ? 'rounded-t' : ''} ${last ? 'rounded-b' : ''} hover:cursor-pointer`}>
             <h6 className={`${editable ? 'w-5/12' : 'w-6/12'}`}>{task.title}</h6>
             <p className='w-4/12'>{moment(task.dueDate).format('hh:mm a, Do MMM (dddd)')}</p>
             <p className={`w-1/12 ${editable ? 'hidden' : ''}`}>{['Low', 'Medium', 'High'][task.priority]}</p>
@@ -98,11 +98,13 @@ export const TaskListView: React.FC = () => {
                                                         <p className='w-1/12'>Priority</p>
                                                         <p className='w-1/12'>Task Status</p>
                                                     </div>
-                                                    {
-                                                        tasksByTeam.map((task, taskIdx) => (
-                                                            <TaskListItem task={task} key={teamIdx * 100 + taskIdx} />
-                                                        ))
-                                                    }
+                                                    <div className="p-1">
+                                                        {
+                                                            tasksByTeam.map((task, taskIdx) => (
+                                                                <TaskListItem task={task} key={teamIdx * 100 + taskIdx} first={taskIdx === 0} last={taskIdx === (tasksByTeam.length - 1)} />
+                                                            ))
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         )
