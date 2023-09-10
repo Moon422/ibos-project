@@ -5,7 +5,7 @@ import mugshot from '../assets/images/mugshot.png'
 import { CurrentProfileContext, TasksContext, TeamInvitationContext, TeamsContext } from '../contextproviders'
 import { Link, NavLink } from 'react-router-dom'
 import { Welcome } from './welcome'
-import { TaskPriority, TaskStatus } from '../model'
+import { InvitationStatus, TaskPriority, TaskStatus } from '../model'
 import moment from 'moment'
 
 const DashboardDetails: React.FC = () => {
@@ -31,7 +31,7 @@ const DashboardDetails: React.FC = () => {
                         <p className='w-1/2'># of Pending Invitations</p>
                         <p className="w-1/2">
                             {
-                                invitationsContext!.invitations.filter(invitation => invitation.memberId === currentProfileContext!.profile!.username).length
+                                invitationsContext!.invitations.filter(invitation => invitation.memberId === currentProfileContext!.profile!.username && invitation.invitationStatus === InvitationStatus.PENDING).length
                             }
                         </p>
                     </div>
