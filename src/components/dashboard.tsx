@@ -4,6 +4,7 @@ import ibosLogo from '../assets/images/ibos-logo-210.webp'
 import mugshot from '../assets/images/mugshot.png'
 import { CurrentProfileContext } from '../contextproviders'
 import { Link, NavLink } from 'react-router-dom'
+import { Welcome } from './welcome'
 
 export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
     const currentProfileContext = useContext(CurrentProfileContext)
@@ -47,7 +48,7 @@ export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
                         {children}
                     </div>
                 </div >
-            ) : <p>Please Login or Signup to continue</p>}
+            ) : <Welcome />}
         </>
     )
 }
