@@ -84,37 +84,39 @@ const DashboardDetails: React.FC = () => {
                             <p className='w-1/4'>Low</p>
                         </div>
                         {
-                            teamsContext!.teams.map(
-                                team => {
-                                    const highPriorityTasksCount = taskContext!.tasks.filter(task => {
-                                        const dueDiff = moment(task.dueDate).diff(Date())
-                                        return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.HIGH && dueDiff >= 0 && dueDiff <= 172800000
-                                    }).length
-                                    const mediumPriorityTasksCount = taskContext!.tasks.filter(task => {
-                                        const dueDiff = moment(task.dueDate).diff(Date())
-                                        return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.MEDIUM && dueDiff >= 0 && dueDiff <= 172800000
-                                    }).length
-                                    const lowPriorityTasksCount = taskContext!.tasks.filter(task => {
-                                        const dueDiff = moment(task.dueDate).diff(Date())
-                                        return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.LOW && dueDiff >= 0 && dueDiff <= 172800000
-                                    }).length
-                                    return (
-                                        <>
-                                            {
-                                                !(highPriorityTasksCount || mediumPriorityTasksCount || lowPriorityTasksCount)
-                                                || (
-                                                    <div className="flex px-2 py-1 bg-white">
-                                                        <p className='w-1/4'>{team.title}</p>
-                                                        <p className='w-1/4'>{highPriorityTasksCount} (High)</p>
-                                                        <p className='w-1/4'>{mediumPriorityTasksCount} (Medium)</p>
-                                                        <p className='w-1/4'>{lowPriorityTasksCount} (Low)</p>
-                                                    </div>
-                                                )
-                                            }
-                                        </>
-                                    )
-                                }
-                            )
+                            teamsContext!.teams
+                                .filter(team => team.members.includes(currentProfileContext!.profile!.username))
+                                .map(
+                                    team => {
+                                        const highPriorityTasksCount = taskContext!.tasks.filter(task => {
+                                            const dueDiff = moment(task.dueDate).diff(Date())
+                                            return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.HIGH && dueDiff >= 0 && dueDiff <= 172800000
+                                        }).length
+                                        const mediumPriorityTasksCount = taskContext!.tasks.filter(task => {
+                                            const dueDiff = moment(task.dueDate).diff(Date())
+                                            return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.MEDIUM && dueDiff >= 0 && dueDiff <= 172800000
+                                        }).length
+                                        const lowPriorityTasksCount = taskContext!.tasks.filter(task => {
+                                            const dueDiff = moment(task.dueDate).diff(Date())
+                                            return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.LOW && dueDiff >= 0 && dueDiff <= 172800000
+                                        }).length
+                                        return (
+                                            <>
+                                                {
+                                                    !(highPriorityTasksCount || mediumPriorityTasksCount || lowPriorityTasksCount)
+                                                    || (
+                                                        <div className="flex px-2 py-1 bg-white">
+                                                            <p className='w-1/4'>{team.title}</p>
+                                                            <p className='w-1/4'>{highPriorityTasksCount} (High)</p>
+                                                            <p className='w-1/4'>{mediumPriorityTasksCount} (Medium)</p>
+                                                            <p className='w-1/4'>{lowPriorityTasksCount} (Low)</p>
+                                                        </div>
+                                                    )
+                                                }
+                                            </>
+                                        )
+                                    }
+                                )
                         }
                     </div>
                 </div>
