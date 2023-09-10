@@ -82,9 +82,7 @@ function App() {
             <CurrentProfileContext.Provider value={{ profile: loggedinUser, setProfile: p => setLogggedinUser(() => p) }}>
               <Routes>
                 <Route index element={(
-                  <Dashboard>
-                    <p>Hello</p>
-                  </Dashboard>
+                  <Dashboard />
                 )} />
                 <Route path='/tasks' element={(
                   <Dashboard>

@@ -2,11 +2,127 @@ import React, { ReactNode, useContext, useState } from 'react'
 
 import ibosLogo from '../assets/images/ibos-logo-210.webp'
 import mugshot from '../assets/images/mugshot.png'
-import { CurrentProfileContext } from '../contextproviders'
+import { CurrentProfileContext, TasksContext, TeamInvitationContext, TeamsContext } from '../contextproviders'
 import { Link, NavLink } from 'react-router-dom'
 import { Welcome } from './welcome'
+import { TaskPriority, TaskStatus } from '../model'
+import moment from 'moment'
 
-export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
+const DashboardDetails: React.FC = () => {
+    const currentProfileContext = useContext(CurrentProfileContext)
+    const teamsContext = useContext(TeamsContext)
+    const invitationsContext = useContext(TeamInvitationContext)
+    const taskContext = useContext(TasksContext)
+
+    return (
+        <>
+            <div className="grid grid-cols-3 gap-4 me-4">
+                <div className="bg-red-500 rounded px-4 pb-4">
+                    <h4 className='text-center text-white'>Teams</h4>
+                    <div className="flex">
+                        <p className='w-1/2'># of Teams Joined</p>
+                        <p className="w-1/2">
+                            {
+                                teamsContext!.teams.filter(team => team.members.includes(currentProfileContext!.profile!.username)).length
+                            }
+                        </p>
+                    </div>
+                    <div className="flex">
+                        <p className='w-1/2'># of Pending Invitations</p>
+                        <p className="w-1/2">
+                            {
+                                invitationsContext!.invitations.filter(invitation => invitation.memberId === currentProfileContext!.profile!.username).length
+                            }
+                        </p>
+                    </div>
+                </div>
+                <div className="bg-green-500 rounded px-4 pb-4">
+                    <h4 className='text-center text-white'>Tasks by priority</h4>
+                    <div className='border'>
+                        <div className="flex py-1 px-2 text-white bg-stone-500">
+                            <p className='w-1/4'>Title</p>
+                            <p className='w-1/4'>High</p>
+                            <p className='w-1/4'>Medium</p>
+                            <p className='w-1/4'>Low</p>
+                        </div>
+                        {
+                            teamsContext!.teams.map(
+                                team => {
+                                    const highPriorityTasksCount = taskContext!.tasks.filter(task => task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.HIGH).length
+                                    const mediumPriorityTasksCount = taskContext!.tasks.filter(task => task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.MEDIUM).length
+                                    const lowPriorityTasksCount = taskContext!.tasks.filter(task => task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.LOW).length
+                                    return (
+                                        <>
+                                            {
+                                                !(highPriorityTasksCount || mediumPriorityTasksCount || lowPriorityTasksCount)
+                                                || (
+                                                    <div className="flex px-2 py-1 bg-white">
+                                                        <p className='w-1/4'>{team.title}</p>
+                                                        <p className='w-1/4'>{highPriorityTasksCount} (High)</p>
+                                                        <p className='w-1/4'>{mediumPriorityTasksCount} (Medium)</p>
+                                                        <p className='w-1/4'>{lowPriorityTasksCount} (Low)</p>
+                                                    </div>
+                                                )
+                                            }
+                                        </>
+                                    )
+                                }
+                            )
+                        }
+                    </div>
+                </div>
+                <div className="bg-blue-500 rounded px-4 pb-4">
+                    <h4 className='text-center text-white mb-2'>Tasks by due date</h4>
+                    <h6 className="text-center text-white mt-0">Tasks Due in 2 days</h6>
+                    <div className='border'>
+                        <div className="flex py-1 px-2 text-white bg-stone-500">
+                            <p className='w-1/4'>Title</p>
+                            <p className='w-1/4'>High</p>
+                            <p className='w-1/4'>Medium</p>
+                            <p className='w-1/4'>Low</p>
+                        </div>
+                        {
+                            teamsContext!.teams.map(
+                                team => {
+                                    const highPriorityTasksCount = taskContext!.tasks.filter(task => {
+                                        const dueDiff = moment(task.dueDate).diff(Date())
+                                        return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.HIGH && dueDiff >= 0 && dueDiff <= 172800000
+                                    }).length
+                                    const mediumPriorityTasksCount = taskContext!.tasks.filter(task => {
+                                        const dueDiff = moment(task.dueDate).diff(Date())
+                                        return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.MEDIUM && dueDiff >= 0 && dueDiff <= 172800000
+                                    }).length
+                                    const lowPriorityTasksCount = taskContext!.tasks.filter(task => {
+                                        const dueDiff = moment(task.dueDate).diff(Date())
+                                        return task.taskStatus !== TaskStatus.COMPLETED && task.teamId === team.id && task.priority === TaskPriority.LOW && dueDiff >= 0 && dueDiff <= 172800000
+                                    }).length
+                                    return (
+                                        <>
+                                            {
+                                                !(highPriorityTasksCount || mediumPriorityTasksCount || lowPriorityTasksCount)
+                                                || (
+                                                    <div className="flex px-2 py-1 bg-white">
+                                                        <p className='w-1/4'>{team.title}</p>
+                                                        <p className='w-1/4'>{highPriorityTasksCount} (High)</p>
+                                                        <p className='w-1/4'>{mediumPriorityTasksCount} (Medium)</p>
+                                                        <p className='w-1/4'>{lowPriorityTasksCount} (Low)</p>
+                                                    </div>
+                                                )
+                                            }
+                                        </>
+                                    )
+                                }
+                            )
+                        }
+                    </div>
+                </div>
+            </div>
+            <p className='mt-10'>NB: Please don't use the address bar, back button, or reload button. There is some issue I am facing with react router.<br />Use the buttons in application for navigation</p>
+        </>
+    )
+}
+
+export const Dashboard: React.FC<{ children?: ReactNode }> = ({ children }) => {
     const currentProfileContext = useContext(CurrentProfileContext)
     const [showDropdown, setShowDropdown] = useState<boolean>(false)
 
@@ -45,7 +161,7 @@ export const Dashboard: React.FC<{ children: ReactNode }> = ({ children }) => {
                         </NavLink>
                     </div>
                     <div className='w-5/6 py-4'>
-                        {children}
+                        {children || <DashboardDetails />}
                     </div>
                 </div >
             ) : <Welcome />}
